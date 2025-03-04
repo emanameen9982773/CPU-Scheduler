@@ -38,12 +38,12 @@ public class Process {
         }
     };
   
-  public double calculateTurnaroundTime(int n){
+  public static double calculateTurnaroundTime(int n){
   double Turnaround=termenationTime - startTime;
   return Turnaround/n ;
 }
 
- public double calculateWaitingTime(int n){
+ public static double calculateWaitingTime(int n){
   double Waiting = calculateTurnaroundTime(n) - burstTime;
   return Waiting/n ;
 }

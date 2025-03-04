@@ -44,7 +44,7 @@ public class Process {
 }
 
  public double calculateWaitingTime(int n){
-  double Waiting = calculateTurnaroundTime() - startTime;
+  double Waiting = calculateTurnaroundTime(n) - startTime;
   return Waiting/n ;
 }
 }

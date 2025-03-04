@@ -3,7 +3,7 @@ import java.util.PriorityQueue;
 public class ArrivalPQ {
     private PriorityQueue<Process> queue;
 
-    public ArrivalTimePQ() {
+    public ArrivalPQ() {
         queue = new PriorityQueue<>(Process.arrivalComparator);
     }
 

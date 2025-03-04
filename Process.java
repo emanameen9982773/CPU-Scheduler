@@ -10,6 +10,7 @@ public class Process {
     public int burstTime;
     public Process nextProcess;
     public boolean first;
+    public int initialBurstTime;
     
 
     public Process(int arr, int burst){
@@ -19,6 +20,7 @@ public class Process {
         burstTime=burst;
         nextProcess=null;
         first=true;
+        initialBurstTime=burst;
  
     }
 
@@ -38,13 +40,13 @@ public class Process {
         }
     };
   
-  public static double calculateTurnaroundTime(){
-  double Turnaround=termenationTime - startTime;
+  public  double calculateTurnaroundTime(){
+  double Turnaround=termenationTime-arrival;
   return Turnaround ;
 }
 
- public static double calculateWaitingTime(){
-  double Waiting = calculateTurnaroundTime() - burstTime;
+ public  double calculateWaitingTime(){
+  double Waiting = calculateTurnaroundTime() - initialBurstTime;
   return Waiting ;
 }
 }

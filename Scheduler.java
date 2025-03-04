@@ -1,4 +1,5 @@
 import java.util.PriorityQueue;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Scheduler {
@@ -31,8 +32,8 @@ public class Scheduler {
         if (time > 0) {
           System.out.println(time + "-" + (time + 1) + "\tCS"); // Context Switch
           time++;
+          numOfCS++;
         }
-        numOfCS++;
         running = eventQueue.remove();
         start = time;
         continue;
@@ -77,6 +78,12 @@ public class Scheduler {
       time++;
 
     }
+    double Waiting=0;
+   
+    for(Process process:termenated ){
+       Waiting+=process.calculateWaitingTime();
+    }
+    System.out.println(Waiting/4);
 
   }
 

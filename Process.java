@@ -37,5 +37,15 @@ public class Process {
             return Integer.compare(p1.burstTime, p2.burstTime);
         }
     };
-    
+  
+  public double calculateTurnaroundTime(){
+  double Turnaround=termenationTime - startTime;
+  return Turnaround;
 }
+
+ public double calculateWaitingTime(){
+  double Waiting = calculateTurnaroundTime() - startTime;
+  return Waiting;
+}
+}
+

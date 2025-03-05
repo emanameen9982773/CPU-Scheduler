@@ -11,6 +11,8 @@ public class Process {
     public Process nextProcess;
     public boolean first;
     public int initialBurstTime;
+    public int totalIdleTime=0;
+    public int toutalExecutionTime=0;
     
 
     public Process(int arr, int burst){
@@ -49,5 +51,18 @@ public class Process {
   double Waiting = calculateTurnaroundTime() - initialBurstTime;
   return Waiting ;
 }
+  
+  public double calculateCPUutilization(){
+
+if(toutalExecutionTime==0){
+
+return 0;
+}
+
+double utilization = ((double) (toutalExecutionTime - totalIdleTime)/ totalIdleTime)*100;
+return utilization;
+
+}
+
 }
 

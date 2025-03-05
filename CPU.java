@@ -20,8 +20,8 @@ public class CPU {
          
         Scheduler.printResults(arrival, 1);
         LinkedList<Process> termenated =  Scheduler.schedule(arrival);
-        System.out.printf("Performance Metrics\nAverage Turnaround Time: %.2f",Scheduler.calculateAverageTurnaround(termenated));
-        System.out.printf("Average Waiting Time: %.2f",Scheduler.calculateAverageWaitting(termenated));
+        System.out.printf("Performance Metrics\nAverage Turnaround Time: %.2f\n",Scheduler.calculateAverageTurnaround(termenated));
+        System.out.printf("Average Waiting Time: %.2f\n",Scheduler.calculateAverageWaitting(termenated));
         System.out.printf("CPU Utilization: %.2f",Process.calculateCPUutilization());
 
         scanner.close();

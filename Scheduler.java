@@ -1,26 +1,23 @@
 import java.util.PriorityQueue;
-import java.util.Iterator;
 import java.util.LinkedList;
+
 
 public class Scheduler {
 
-  public static void main(String[] args) {
+  public static LinkedList<Process> schedule (PriorityQueue<Process>  arrival) {
 
-    PriorityQueue<Process> arrival = new PriorityQueue<>(Process.arrivalComparator);
+    
     PriorityQueue<Process> eventQueue = new PriorityQueue<>(Process.burstTimeComparator);
     LinkedList<Process> termenated = new LinkedList<>();
 
-    arrival.add(new Process(0, 8));
-    arrival.add(new Process(1, 4));
-    arrival.add(new Process(2, 5));
-    arrival.add(new Process(3, 5));
 
     int time = 0;
     int numOfCS = 0;
     int start = 0;
     int cpuI = 0;
-
     Process running = null;
+
+    
     while (!arrival.isEmpty() || !eventQueue.isEmpty() || running != null) {
       
 
@@ -29,12 +26,13 @@ public class Scheduler {
 
 
       if (running == null && !eventQueue.isEmpty()) {
-        if (time > 0) {
-          System.out.println(time + "-" + (time + 1) + "\tCS"); // Context Switch
+        if (time > 0 && !Process.firstProcess) {
+          System.out.println(time + "-" + (time + 1) + "\t\tCS"); // Context Switch
           time++;
           numOfCS++;
         }
         running = eventQueue.remove();
+        Process.firstProcess=false;
         start = time;
         continue;
       }
@@ -42,8 +40,8 @@ public class Scheduler {
 
       else if (running != null && !eventQueue.isEmpty())
         if (running.burstTime > eventQueue.element().burstTime) {
-          System.out.println(start + "-" + time + "\tP" + running.ID);
-          System.out.println(time + "-" + (time + 1) + "\tCS");
+          System.out.println(start + "-" + time + "\t\tP" + running.ID);
+          System.out.println(time + "-" + (time + 1) + "\t\tCS");
           numOfCS++;
           time++;
           eventQueue.add(running);
@@ -67,7 +65,7 @@ public class Scheduler {
         if (running.burstTime == 0) {
           running.termenationTime = time;
           termenated.add(running);
-          System.out.println(start + "-" + time + "\tP" + running.ID);
+          System.out.println(start + "-" + time + "\t\tP" + running.ID);
           running = null;
         }
         continue;
@@ -78,13 +76,44 @@ public class Scheduler {
       time++;
 
     }
-    double Waiting=0;
-   
-    for(Process process:termenated ){
-       Waiting+=process.calculateWaitingTime();
-    }
-    System.out.println(Waiting/4);
+    
+    Process.totalIdleTime=numOfCS+cpuI ;
+    Process.toutalExecutionTime=time;
+    return termenated;
 
   }
+
+
+  static void printResults(PriorityQueue<Process> arrival, int contextSwitchTime) {
+
+    System.out.print("\nNumber of processes = " + arrival.size()+" (");
+    for(int i=0; i<arrival.size()-1; i++)
+    System.out.print("P"+(i+1)+", ");
+    System.out.println("P"+arrival.size()+" )\nArrival times and burst times as follows:");
+
+    for (Process p : arrival) {
+        System.out.println("Process ID: " + p.ID + ", Arrival Time: " + p.arrival + ", Burst Time: " + p.burstTime);
+    }
+
+    System.out.println("Scheduling Algorithm: Shortest remaining time first");
+    System.out.println("Context Switch: " + contextSwitchTime + " ms");
+    System.out.println("Time\t\tProcess/CS");
+}
+
+
+static double calculateAverageWaitting(LinkedList<Process> processes){
+  double averageWaitting=0;
+  for(Process process: processes)
+  averageWaitting+= process.calculateWaitingTime();
+  return averageWaitting/processes.size();
+}
+
+
+static double calculateAverageTurnaround(LinkedList<Process> processes){
+  double averageTurnaround=0;
+  for(Process process: processes)
+  averageTurnaround+= process.calculateTurnaroundTime();
+  return averageTurnaround/processes.size();
+}
 
 }

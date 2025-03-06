@@ -33,7 +33,11 @@ public class Scheduler {
         readyQueue.add(arrival.poll());
 
         if (running != null && !readyQueue.isEmpty())
-          if (running.burstTime > readyQueue.element().burstTime) {
+          if (running.burstTime > readyQueue.element().burstTime) {     
+           /*
+            * Switch between processes in case there is a Process in the Ready queue
+            * with burst time less than the currently running process
+            */
             System.out.println(start + "-" + time + "\t\tP" + running.ID);
             System.out.println(time + "-" + (time + 1) + "\t\tCS");
             numOfCS++;
@@ -58,10 +62,7 @@ public class Scheduler {
         continue;
       }
 
-      /*
-       * Switch between processes in case there is a Process in the Ready queue
-       * with burst time less than the currently running process
-       */
+      
 
       // excute the currently running procee if exists by decrementing its burst time
       if (running != null) {

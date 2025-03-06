@@ -4,12 +4,10 @@ public class Process {
 
   public static int counter;
   public int ID;
-  public int startTime;
   public int termenationTime;
   public int arrival;
   public int burstTime;
   public Process nextProcess;
-  public boolean first;
   public int initialBurstTime;
   public static int totalIdleTime = 0;
   public static int toutalExecutionTime = 0;
@@ -21,7 +19,6 @@ public class Process {
     arrival = arr;
     burstTime = burst;
     nextProcess = null;
-    first = true;
     initialBurstTime = burst;
 
   }
